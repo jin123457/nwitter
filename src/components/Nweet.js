@@ -8,11 +8,11 @@ const Nweet = ({nweetObj,isOwner}) => {
     const [editing,setEditing] = useState(false);
     const [newNweet,setNewNweet] = useState(nweetObj.text);
     const NweetTextRef = doc(dbSerive, "Nweets", `${nweetObj.id}`);
-    const onDeleteClick = () => {
+    const onDeleteClick = async() => {
         const ok = window.confirm("Are you sure you want to delete this nweet?");
         if(ok){
             // delete 부분
-            deleteDoc(NweetTextRef);
+            await deleteDoc(NweetTextRef);
         }
     }
     const toggleEditing = () => setEditing((prev) => !prev);
