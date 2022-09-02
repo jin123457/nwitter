@@ -1,6 +1,7 @@
 import { async } from "@firebase/util";
-import { dbSerive } from "fBase";
+import { dbSerive, storageService } from "fBase";
 import { doc, deleteDoc, updateDoc }from"firebase/firestore";
+import { deleteObject, ref } from "@firebase/storage";
 import React, { useState } from "react";
 
 
@@ -13,6 +14,8 @@ const Nweet = ({nweetObj,isOwner}) => {
         if(ok){
             // delete 부분
             await deleteDoc(NweetTextRef);
+            const deleteObjURL = ref(storageService, nweetObj.attachmentUrl);
+            await deleteObject(deleteObjURL);
         }
     }
     const toggleEditing = () => setEditing((prev) => !prev);
@@ -43,6 +46,9 @@ const Nweet = ({nweetObj,isOwner}) => {
                 ) : (
                     <>
                         <h4>{nweetObj.text}</h4>
+                        {
+                            nweetObj.attachmentUrl && <img src={nweetObj.attachmentUrl} width="50px" height="50px" />
+                        }
                         {
                         isOwner && 
                             (
