@@ -23,12 +23,12 @@ const Home = ({ userObj }) => {
         e.preventDefault();
         try {
             let attachmentUrl = "";
-            if(attachment != ""){
+            if(attachment !== ""){
                 const fileRef = ref(storageService, `${userObj.uid}/${v4()}`);
                 const response = await uploadString(fileRef, attachment, "data_url");
                 attachmentUrl = await getDownloadURL(response.ref);
             }
-            const docRef = await addDoc(collection(dbSerive, "Nweets"), {
+            await addDoc(collection(dbSerive, "Nweets"), {
                 text: nweet,
                 createAt: Date.now(),
                 creatorId: userObj.uid,
@@ -70,7 +70,7 @@ const Home = ({ userObj }) => {
                     (
                         <>
                             <div>
-                                <img src={attachment} width="50px" height="50px" />
+                                <img src={attachment} width="50px" height="50px" alt="이미지 미리보기" />
                                 <button onClick={onClearAttachment}>Clear</button>
                             </div>
                         </>

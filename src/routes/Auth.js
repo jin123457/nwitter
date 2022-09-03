@@ -1,4 +1,3 @@
-import { async } from "@firebase/util";
 import { authService } from "fBase";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, GithubAuthProvider, signInWithPopup } from "firebase/auth";
 import React, { useState } from "react";
