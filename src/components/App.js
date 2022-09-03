@@ -17,9 +17,13 @@ function App() {
             setInit(true);
         });
     }, []);
+    const refreshUser = () => {
+        const user = authService.currentUser;
+        setUserObj({...user});
+        }
     return (
         <>
-            {init ? <AppRouter isLoggedIn={isLoggedIn} userObj={userObj} /> : "Initializing...."}
+            {init ? <AppRouter isLoggedIn={isLoggedIn} userObj={userObj} refreshUser={refreshUser} /> : "Initializing...."}
             {/* <footer>&copy;{new Date().getFullYear()} Nwitter</footer> */}
         </>
     );

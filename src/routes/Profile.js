@@ -4,7 +4,7 @@ import { authService, dbSerive } from "fBase";
 import { collection, getDocs, query, where, orderBy } from "firebase/firestore";
 import { updateProfile } from "@firebase/auth";
 
-const Profile = ({userObj}) => {
+const Profile = ({refreshUser, userObj}) => {
     const navigate = useNavigate();
     const [newDisplayName,setNewDisplayName] = useState(userObj.displayName);
     const onLogOutClick = () => {
@@ -26,8 +26,9 @@ const Profile = ({userObj}) => {
         if(userObj.displayName !== newDisplayName){
             await updateProfile(userObj,{
                 displayName : newDisplayName
-            })
+            });
         }
+        refreshUser();
     }
     const onChange = (e) => {
         const {target : {value},} = e;
