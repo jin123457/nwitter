@@ -2,6 +2,8 @@ import { dbSerive, storageService } from "fBase";
 import { doc, deleteDoc, updateDoc }from"firebase/firestore";
 import { deleteObject, ref } from "@firebase/storage";
 import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 
 
 const Nweet = ({nweetObj,isOwner}) => {
@@ -32,34 +34,41 @@ const Nweet = ({nweetObj,isOwner}) => {
         setNewNweet(value);
     }
     return (
-        <div>
-            {
-                editing ? (
-                    <>
-                        <form onSubmit={onSubmit}>
-                            <input type="text" placeholder="Edit your nweet?" value={newNweet} onChange={onChange}/>
-                            <input value="update nweet" type="submit" />
-                        </form>
-                        <button onClick={toggleEditing}>cancle</button>
-                    </>
-                ) : (
-                    <>
-                        <h4>{nweetObj.text}</h4>
-                        {
-                            nweetObj.attachmentUrl && <img src={nweetObj.attachmentUrl} width="50px" height="50px" alt={nweetObj.text}/>
-                        }
-                        {
-                        isOwner && 
-                            (
-                                <>
-                                    <button onClick={onDeleteClick}>Delete nweet</button>
-                                    <button onClick={toggleEditing}>Edit nweet</button>
-                                </>
-                            )
-                        }
-                    </>
-                )
-            }
+        <div className="nweet">
+        {editing ? (
+            <>
+            <form onSubmit={onSubmit} className="container nweetEdit">
+                <input
+                type="text"
+                placeholder="Edit your nweet"
+                value={newNweet}
+                required
+                autoFocus
+                onChange={onChange}
+                className="formInput"
+                />
+                <input type="submit" value="Update Nweet" className="formBtn" />
+            </form>
+            <span onClick={toggleEditing} className="formBtn cancelBtn">
+                Cancel
+            </span>
+            </>
+        ) : (
+            <>
+            <h4>{nweetObj.text}</h4>
+            {nweetObj.attachmentUrl && <img src={nweetObj.attachmentUrl} alt={nweetObj.text} />}
+            {isOwner && (
+                <div className="nweet__actions">
+                <span onClick={onDeleteClick}>
+                    <FontAwesomeIcon icon={faTrash} />
+                </span>
+                <span onClick={toggleEditing}>
+                    <FontAwesomeIcon icon={faPencilAlt} />
+                </span>
+                </div>
+            )}
+            </>
+        )}
         </div>
     );
 }
